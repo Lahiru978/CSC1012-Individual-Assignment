@@ -104,3 +104,54 @@ int main() {
 
     return 0;
 
+    void initializeSystem() {
+    // Initialize cities with some default Sri Lankan cities
+    strcpy(cities[0], "Colombo");
+    strcpy(cities[1], "Kandy");
+    strcpy(cities[2], "Galle");
+    strcpy(cities[3], "Jaffna");
+    city_count = 4;
+
+    // Initialize distance matrix - start with no connections
+    int i, j;  // declaring variables separately for old-school style
+    for(i = 0; i < MAX_CITIES; i++) {
+        for(j = 0; j < MAX_CITIES; j++) {
+            if(i == j) {
+                distance[i][j] = 0;  // distance from city to itself is 0
+            } else {
+                distance[i][j] = -1; // -1 means no direct connection
+            }
+        }
+    }
+
+    // Set some realistic distances between Sri Lankan cities (approximate)
+    distance[0][1] = distance[1][0] = 120; // Colombo-Kandy
+    distance[0][2] = distance[2][0] = 115; // Colombo-Galle
+    distance[0][3] = distance[3][0] = 400; // Colombo-Jaffna
+    distance[1][2] = distance[2][1] = 200; // Kandy-Galle
+    distance[1][3] = distance[3][1] = 350; // Kandy-Jaffna
+    distance[2][3] = distance[3][2] = 450; // Galle-Jaffna
+
+    // Initialize our fleet of vehicles
+    strcpy(vehicles[0].name, "Van");
+    vehicles[0].capacity = 1000;     // 1 ton capacity
+    vehicles[0].rate_per_km = 30;    // 30 LKR per km
+    vehicles[0].avg_speed = 60;      // 60 km/h average
+    vehicles[0].fuel_efficiency = 12; // 12 km per liter
+
+    strcpy(vehicles[1].name, "Truck");
+    vehicles[1].capacity = 5000;     // 5 ton capacity
+    vehicles[1].rate_per_km = 40;    // 40 LKR per km
+    vehicles[1].avg_speed = 50;      // slower due to size
+    vehicles[1].fuel_efficiency = 6;  // less fuel efficient
+
+    strcpy(vehicles[2].name, "Lorry");
+    vehicles[2].capacity = 10000;    // 10 ton capacity
+    vehicles[2].rate_per_km = 80;    // highest rate
+    vehicles[2].avg_speed = 45;      // slowest but highest capacity
+    vehicles[2].fuel_efficiency = 4;  // least fuel efficient
+
+    printf("Logistics Management System Initialized!\n");
+    printf("Default cities and distances loaded.\n");
+}
+
