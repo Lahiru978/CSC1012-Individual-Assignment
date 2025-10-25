@@ -105,15 +105,15 @@ int main() {
     return 0;
 
     void initializeSystem() {
-    // Initialize cities with some default Sri Lankan cities
+    // Initialize cities with some default  cities
     strcpy(cities[0], "Colombo");
     strcpy(cities[1], "Kandy");
     strcpy(cities[2], "Galle");
     strcpy(cities[3], "Jaffna");
     city_count = 4;
 
-    // Initialize distance matrix - start with no connections
-    int i, j;  // declaring variables separately for old-school style
+
+    int i, j;
     for(i = 0; i < MAX_CITIES; i++) {
         for(j = 0; j < MAX_CITIES; j++) {
             if(i == j) {
@@ -124,7 +124,7 @@ int main() {
         }
     }
 
-    // Set some realistic distances between Sri Lankan cities (approximate)
+    // Set some realistic distances between  cities (approximate)
     distance[0][1] = distance[1][0] = 120; // Colombo-Kandy
     distance[0][2] = distance[2][0] = 115; // Colombo-Galle
     distance[0][3] = distance[3][0] = 400; // Colombo-Jaffna
