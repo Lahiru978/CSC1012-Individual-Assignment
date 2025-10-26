@@ -487,5 +487,49 @@ void generatePerformanceReport() {
     printf("Trucks: %d deliveries\n", truck_count);
     printf("Lorries: %d deliveries\n", lorry_count);
 }
+void findLeastCostRoute() {
+    if(city_count < 2) {
+        printf("Need at least 2 cities!\n");
+        return;
+    }
+
+    int source, dest;
+
+    printf("\nAvailable Cities:\n");
+    int i;
+    for(i = 0; i < city_count; i++) {
+        printf("%d. %s\n", i, cities[i]);
+    }
+
+    printf("Enter source city index: ");
+    scanf("%d", &source);
+    printf("Enter destination city index: ");
+    scanf("%d", &dest);
+
+    if(source < 0 || source >= city_count || dest < 0 || dest >= city_count) {
+        printf("Invalid city indices!\n");
+        return;
+    }
+
+    if(source == dest) {
+        printf("Source and destination are the same!\n");
+        return;
+    }
+
+    int path[MAX_CITIES];
+    int path_length;
+    float min_distance;
+
+    // Find the shortest route
+    exhaustiveSearch(source, dest, path, &path_length, &min_distance);
+
+    if(min_distance == INT_MAX) {
+        printf("No route found between %s and %s!\n", cities[source], cities[dest]);
+    } else {
+        printf("\nLeast Cost Route Found!\n");
+        displayRoute(path, path_length, min_distance);
+    }
+}
+
 
 
