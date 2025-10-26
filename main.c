@@ -432,3 +432,22 @@ void calculateDeliveryDetails(int source, int dest, float weight, int vehicle_ty
     printf("Estimated Time: %.2f hours\n", estimated_time);
     printf("======================================================\n");
 }
+void viewDeliveryRecords() {
+    if(delivery_count == 0) {
+        printf("No delivery records found!\n");
+        return;
+    }
+
+    printf("\n--- Delivery Records ---\n");
+    printf("ID | From     | To       | Weight | Vehicle | Distance | Charge\n");
+    printf("----|----------|----------|--------|---------|----------|--------\n");
+
+    int i;
+    for(i = 0; i < delivery_count; i++) {
+        Delivery d = deliveries[i];
+        printf("%-3d | %-8s | %-8s | %-6.1f | %-7s | %-8.1f | %-8.2f\n",
+               d.id, d.source, d.destination, d.weight,
+               vehicles[d.vehicle_type-1].name, d.distance, d.customer_charge);
+    }
+}
+
