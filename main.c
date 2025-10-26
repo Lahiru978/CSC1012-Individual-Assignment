@@ -301,4 +301,79 @@ void inputOrEditDistance() {
 
     printf("Distance updated successfully!\n");
 }
+void handleDeliveryRequest() {
+    if(city_count < 2) {
+        printf("Need at least 2 cities to handle deliveries!\n");
+        return;
+    }
+
+    int source, dest, vehicle_type;
+    float weight;
+
+    printf("\n--- New Delivery Request ---\n");
+
+    // Show available cities
+    printf("Available Cities:\n");
+    int i;
+    for(i = 0; i < city_count; i++) {
+        printf("%d. %s\n", i, cities[i]);
+    }
+
+    printf("Enter source city index: ");
+    scanf("%d", &source);
+    printf("Enter destination city index: ");
+    scanf("%d", &dest);
+
+
+    if(source < 0 || source >= city_count || dest < 0 || dest >= city_count) {
+        printf("Invalid city indices!\n");
+        return;
+    }
+
+    if(source == dest) {
+        printf("Source and destination cannot be the same!\n");
+        return;
+    }
+
+    if(distance[source][dest] == -1) {
+        printf("No direct route exists between these cities!\n");
+        printf("Try using the route finder for alternative paths.\n");
+        return;
+    }
+
+    // Show vehicle options
+    printf("\nAvailable Vehicles:\n");
+    printf("1. Van (Capacity: %dkg, Rate: %.2f LKR/km)\n",
+           vehicles[0].capacity, vehicles[0].rate_per_km);
+    printf("2. Truck (Capacity: %dkg, Rate: %.2f LKR/km)\n",
+           vehicles[1].capacity, vehicles[1].rate_per_km);
+    printf("3. Lorry (Capacity: %dkg, Rate: %.2f LKR/km)\n",
+           vehicles[2].capacity, vehicles[2].rate_per_km);
+
+    printf("Select vehicle type (1-3): ");
+    scanf("%d", &vehicle_type);
+
+    if(vehicle_type < 1 || vehicle_type > 3) {
+        printf("Invalid vehicle type!\n");
+        return;
+    }
+
+    printf("Enter package weight (kg): ");
+    scanf("%f", &weight);
+
+    if(weight <= 0) {
+        printf("Weight must be positive!\n");
+        return;
+    }
+
+
+    if(weight > vehicles[vehicle_type-1].capacity) {
+        printf("Weight exceeds vehicle capacity! Maximum for %s: %dkg\n",
+               vehicles[vehicle_type-1].name, vehicles[vehicle_type-1].capacity);
+        return;
+    }
+
+    // Calculate and display delivery details
+    calculateDeliveryDetails(source, dest, weight, vehicle_type);
+}
 
