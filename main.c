@@ -167,5 +167,45 @@ void displayMainMenu() {
     printf("7. Exit\n");
     printf("======================================================\n");
 }
+void manageCities() {
+    int choice;
 
+    do {
+        printf("\n--- City Management ---\n");
+        printf("1. Add City\n");
+        printf("2. View Cities\n");
+        printf("3. Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1:
+                if(city_count < MAX_CITIES) {
+                    printf("Enter city name: ");
+                    scanf("%s", cities[city_count]);
+                    city_count++;
+                    printf("City added successfully!\n");
+                } else {
+                    printf("Maximum number of cities reached! Can't add more.\n");
+                }
+                break;
+
+            case 2:
+                printf("\n--- Available Cities ---\n");
+                int i;
+                for(i = 0; i < city_count; i++) {
+                    printf("%d. %s\n", i, cities[i]);
+                }
+                break;
+
+            case 3:
+                // Go back to main menu
+                break;
+
+            default:
+                printf("Invalid choice!\n");
+        }
+
+    } while(choice != 3);
+}
 
