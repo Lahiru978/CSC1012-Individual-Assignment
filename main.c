@@ -530,6 +530,54 @@ void findLeastCostRoute() {
         displayRoute(path, path_length, min_distance);
     }
 }
+void exhaustiveSearch(int source, int dest, int *path, int *path_length, float *min_distance) {
+    *min_distance = INT_MAX;
+
+    // Check direct path first
+    if(distance[source][dest] != -1) {
+        path[0] = source;
+        path[1] = dest;
+        *path_length = 2;
+        *min_distance = distance[source][dest];
+    }
+
+    // Generate permutations for up to 4 cities
+    for(int i = 0; i < city_count; i++) {
+        if(i != source && i != dest) {
+
+            // Two intermediate cities
+            for(int j = 0; j < city_count; j++) {
+                if(j != source && j != dest && j != i) {
+
+                    if(distance[source][i] != -1 && distance[i][j] != -1 && distance[j][dest] != -1) {
+                        float total_dist = distance[source][i] + distance[i][j] + distance[j][dest];
+                        if(total_dist < *min_distance) {
+                            *min_distance = total_dist;
+                            path[0] = source;
+                            path[1] = i;
+                            path[2] = j;
+                            path[3] = dest;
+                            *path_length = 4;
+                        }
+                    }
+                }
+            }
+
+            // One intermediate city
+            if(distance[source][i] != -1 && distance[i][dest] != -1) {
+                float total_dist = distance[source][i] + distance[i][dest];
+                if(total_dist < *min_distance) {
+                    *min_distance = total_dist;
+                    path[0] = source;
+                    path[1] = i;
+                    path[2] = dest;
+                    *path_length = 3;
+                }
+            }
+        }
+    }
+}
+
 
 
 
