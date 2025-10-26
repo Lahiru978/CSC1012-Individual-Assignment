@@ -588,6 +588,16 @@ void displayRoute(int *path, int path_length, float distance) {
     }
     printf("\nTotal Distance: %.2f km\n", distance);
 }
-
+float calculatePathDistance(int *path, int path_length) {
+    float total = 0;
+    int i;
+    for(i = 0; i < path_length - 1; i++) {
+        if(distance[path[i]][path[i+1]] == -1) {
+            return -1; // Invalid path
+        }
+        total += distance[path[i]][path[i+1]];
+    }
+    return total;
+}
 
 
