@@ -377,3 +377,58 @@ void handleDeliveryRequest() {
     calculateDeliveryDetails(source, dest, weight, vehicle_type);
 }
 
+void calculateDeliveryDetails(int source, int dest, float weight, int vehicle_type) {
+    Vehicle vehicle = vehicles[vehicle_type-1];
+    float D = distance[source][dest];
+
+    // Calculate all the costs
+    float base_cost = D * vehicle.rate_per_km * (1 + weight / 10000.0);
+    float estimated_time = D / vehicle.avg_speed;
+    float fuel_used = D / vehicle.fuel_efficiency;
+    float fuel_cost = fuel_used * FUEL_PRICE;
+    float operational_cost = base_cost + fuel_cost;
+    float profit = base_cost * 0.25;  // 25% profit margin
+    float customer_charge = operational_cost + profit;
+
+    // Store the delivery record
+    if(delivery_count < MAX_DELIVERIES) {
+        Delivery *delivery = &deliveries[delivery_count];
+
+        delivery->id = delivery_id_counter++;
+        strcpy(delivery->source, cities[source]);
+        strcpy(delivery->destination, cities[dest]);
+        delivery->weight = weight;
+        delivery->vehicle_type = vehicle_type;
+        delivery->distance = D;
+        delivery->base_cost = base_cost;
+        delivery->fuel_used = fuel_used;
+        delivery->fuel_cost = fuel_cost;
+        delivery->operational_cost = operational_cost;
+        delivery->profit = profit;
+        delivery->customer_charge = customer_charge;
+        delivery->estimated_time = estimated_time;
+        delivery->completed = 1;  // Mark as completed
+
+        delivery_count++;
+    }
+
+    // Display detailed breakdown to customer
+    printf("\n======================================================\n");
+    printf("              DELIVERY COST ESTIMATION\n");
+    printf("======================================================\n");
+    printf("From: %s\n", cities[source]);
+    printf("To: %s\n", cities[dest]);
+    printf("Distance: %.2f km\n", D);
+    printf("Vehicle: %s\n", vehicle.name);
+    printf("Weight: %.2f kg\n", weight);
+    printf("------------------------------------------------------\n");
+    printf("Base Cost: %.2f × %.2f × (1 + %.2f/10000) = %.2f LKR\n",
+           D, vehicle.rate_per_km, weight, base_cost);
+    printf("Fuel Used: %.2f L\n", fuel_used);
+    printf("Fuel Cost: %.2f LKR\n", fuel_cost);
+    printf("Operational Cost: %.2f LKR\n", operational_cost);
+    printf("Profit: %.2f LKR\n", profit);
+    printf("Customer Charge: %.2f LKR\n", customer_charge);
+    printf("Estimated Time: %.2f hours\n", estimated_time);
+    printf("======================================================\n");
+}
