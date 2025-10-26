@@ -209,3 +209,96 @@ void manageCities() {
     } while(choice != 3);
 }
 
+
+void manageDistances() {
+    int choice;
+
+    do {
+        printf("\n--- Distance Management ---\n");
+        printf("1. Input/Edit Distance\n");
+        printf("2. View Distance Table\n");
+        printf("3. Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1:
+                inputOrEditDistance();
+                break;
+            case 2:
+                displayDistanceTable();
+                break;
+            case 3:
+                break;
+            default:
+                printf("Invalid choice!\n");
+        }
+
+    } while(choice != 3);
+}
+
+void displayDistanceTable() {
+    printf("\n--- Distance Table (km) ---\n");
+
+
+    printf("%-15s", "");
+    int i, j;
+    for(i = 0; i < city_count; i++) {
+        printf("%-15s", cities[i]);
+    }
+    printf("\n");
+
+
+    for(i = 0; i < city_count; i++) {
+        printf("%-15s", cities[i]);
+        for(j = 0; j < city_count; j++) {
+            if(distance[i][j] == -1) {
+                printf("%-15s", "N/A");
+            } else {
+                printf("%-15d", distance[i][j]);
+            }
+        }
+        printf("\n");
+    }
+}
+
+void inputOrEditDistance() {
+    int city1, city2, dist;
+
+    printf("\nAvailable Cities:\n");
+    int i;
+    for(i = 0; i < city_count; i++) {
+        printf("%d. %s\n", i, cities[i]);
+    }
+
+    printf("Enter source city index: ");
+    scanf("%d", &city1);
+    printf("Enter destination city index: ");
+    scanf("%d", &city2);
+
+
+    if(city1 < 0 || city1 >= city_count || city2 < 0 || city2 >= city_count) {
+        printf("Invalid city indices!\n");
+        return;
+    }
+
+    if(city1 == city2) {
+        printf("Distance from city to itself is always 0!\n");
+        return;
+    }
+
+    printf("Enter distance between %s and %s (km): ", cities[city1], cities[city2]);
+    scanf("%d", &dist);
+
+    if(dist < 0) {
+        printf("Distance cannot be negative!\n");
+        return;
+    }
+
+
+    distance[city1][city2] = dist;
+    distance[city2][city1] = dist;
+
+    printf("Distance updated successfully!\n");
+}
+
