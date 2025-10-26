@@ -422,7 +422,7 @@ void calculateDeliveryDetails(int source, int dest, float weight, int vehicle_ty
     printf("Vehicle: %s\n", vehicle.name);
     printf("Weight: %.2f kg\n", weight);
     printf("------------------------------------------------------\n");
-    printf("Base Cost: %.2f × %.2f × (1 + %.2f/10000) = %.2f LKR\n",
+    printf("Base Cost: %.2f Ã— %.2f Ã— (1 + %.2f/10000) = %.2f LKR\n",
            D, vehicle.rate_per_km, weight, base_cost);
     printf("Fuel Used: %.2f L\n", fuel_used);
     printf("Fuel Cost: %.2f LKR\n", fuel_cost);
@@ -577,7 +577,17 @@ void exhaustiveSearch(int source, int dest, int *path, int *path_length, float *
         }
     }
 }
-
+void displayRoute(int *path, int path_length, float distance) {
+    printf("Route: ");
+    int i;
+    for(i = 0; i < path_length; i++) {
+        printf("%s", cities[path[i]]);
+        if(i < path_length - 1) {
+            printf(" â†’ ");
+        }
+    }
+    printf("\nTotal Distance: %.2f km\n", distance);
+}
 
 
 
