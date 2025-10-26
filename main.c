@@ -154,4 +154,18 @@ int main() {
     printf("Logistics Management System Initialized!\n");
     printf("Default cities and distances loaded.\n");
 }
+void displayMainMenu() {
+    printf("\n======================================================\n");
+    printf("           LOGISTICS MANAGEMENT SYSTEM\n");
+    printf("======================================================\n");
+    printf("1. Manage Cities\n");
+    printf("2. Manage Distances\n");
+    printf("3. Handle Delivery Request\n");
+    printf("4. View Delivery Records\n");
+    printf("5. Generate Performance Report\n");
+    printf("6. Find Least Cost Route\n");
+    printf("7. Exit\n");
+    printf("======================================================\n");
+}
+
 
