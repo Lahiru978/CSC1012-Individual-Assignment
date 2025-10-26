@@ -103,6 +103,7 @@ int main() {
     } while(choice != 7);
 
     return 0;
+}
 
     void initializeSystem() {
     // Initialize cities with some default  cities
