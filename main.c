@@ -450,4 +450,42 @@ void viewDeliveryRecords() {
                vehicles[d.vehicle_type-1].name, d.distance, d.customer_charge);
     }
 }
+void generatePerformanceReport() {
+    if(delivery_count == 0) {
+        printf("No deliveries to generate report!\n");
+        return;
+    }
+
+    // Calculate totals
+    float total_revenue = 0, total_profit = 0, total_operational_cost = 0;
+    int van_count = 0, truck_count = 0, lorry_count = 0;
+
+    int i;
+    for(i = 0; i < delivery_count; i++) {
+        Delivery d = deliveries[i];
+        total_revenue += d.customer_charge;
+        total_profit += d.profit;
+        total_operational_cost += d.operational_cost;
+
+        // Count vehicle usage
+        switch(d.vehicle_type) {
+            case 1: van_count++; break;
+            case 2: truck_count++; break;
+            case 3: lorry_count++; break;
+        }
+    }
+
+    printf("\n--- Performance Report ---\n");
+    printf("Total Deliveries: %d\n", delivery_count);
+    printf("Total Revenue: %.2f LKR\n", total_revenue);
+    printf("Total Profit: %.2f LKR\n", total_profit);
+    printf("Total Operational Cost: %.2f LKR\n", total_operational_cost);
+    printf("Profit Margin: %.2f%%\n", (total_profit / total_revenue) * 100);
+
+    printf("\nVehicle Usage:\n");
+    printf("Vans: %d deliveries\n", van_count);
+    printf("Trucks: %d deliveries\n", truck_count);
+    printf("Lorries: %d deliveries\n", lorry_count);
+}
+
 
